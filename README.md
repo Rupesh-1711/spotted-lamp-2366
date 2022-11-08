@@ -1,1 +1,1 @@
-# -spotted-lamp-2366
+# spotted-lamp-2366
