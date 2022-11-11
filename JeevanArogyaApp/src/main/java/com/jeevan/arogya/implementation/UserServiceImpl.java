@@ -1,6 +1,5 @@
 package com.jeevan.arogya.implementation;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +19,13 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User createUser(User user) throws UserException {
-	
-		User findbyAadar = uRepo.findByAadharNo(user.getAadharNo());
-		if(findbyAadar == null) {
-			return uRepo.save(user);
+
+		User newUser=uRepo.findByMobile(user.getMobile());
+		if(newUser == null) {
+			uRepo.save(user);
+			return user;
 		}else {
-			throw new UserException("User has been already Registered with this Aadhar Number.");
+			throw new UserException("User has been already Registered with this Mobile Number:"+user.getMobile());
 		}
 		
 	}

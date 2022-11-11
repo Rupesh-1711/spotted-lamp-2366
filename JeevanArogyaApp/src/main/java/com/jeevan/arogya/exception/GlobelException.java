@@ -19,28 +19,40 @@ public class GlobelException {
 		
 		MyErrorDetail err = new MyErrorDetail();
 		err.setTimestamp(LocalDateTime.now());
-		err.setMessage("validation Error");
+		err.setMessage(me.getMessage());
 		err.setDescription(me.getBindingResult().getFieldError().getDefaultMessage());
 		
 		return new ResponseEntity<MyErrorDetail>(err,HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(UserException.class)
-	public ResponseEntity<MyErrorDetail> userException(UserException me,WebRequest req) {
+	public ResponseEntity<MyErrorDetail> userException(UserException ue,WebRequest req) {
 		
 		MyErrorDetail err = new MyErrorDetail();
 		err.setTimestamp(LocalDateTime.now());
-		err.setMessage(me.getMessage());
+		err.setMessage(ue.getMessage());
 		err.setDescription(req.getDescription(false));
 		
 		return new ResponseEntity<MyErrorDetail>(err,HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(LoginException.class)
+	public ResponseEntity<MyErrorDetail> loginException(LoginException le, WebRequest req){
+
+		MyErrorDetail err = new MyErrorDetail();
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(le.getMessage());
+		err.setDescription(req.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<MyErrorDetail> Exception(Exception me,WebRequest req) {
+	public ResponseEntity<MyErrorDetail> Exception(Exception e,WebRequest req) {
 		
 		MyErrorDetail err = new MyErrorDetail();
 		err.setTimestamp(LocalDateTime.now());
-		err.setMessage(me.getMessage());
+		err.setMessage(e.getMessage());
 		err.setDescription(req.getDescription(false));
 		
 		return new ResponseEntity<MyErrorDetail>(err,HttpStatus.BAD_REQUEST);
