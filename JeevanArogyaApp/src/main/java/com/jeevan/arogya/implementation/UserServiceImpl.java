@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User createUser(User user) throws UserException {
-
+        
 		User newUser=uRepo.findByMobile(user.getMobile());
 		if(newUser == null) {
 			uRepo.save(user);
