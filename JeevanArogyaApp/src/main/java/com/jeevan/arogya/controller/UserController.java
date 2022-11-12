@@ -3,6 +3,7 @@ package com.jeevan.arogya.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ public class UserController {
 		return new ResponseEntity<String>(loginResponse, HttpStatus.OK);
 	}
 	
-	@PostMapping("/logout/{key}")
+	@GetMapping("/logout/{key}")
 	public ResponseEntity<String> userLogOut(@PathVariable("key") String key) throws LoginException{
 		String loginResponse=userLogin.logOutAccount(key);
 		
