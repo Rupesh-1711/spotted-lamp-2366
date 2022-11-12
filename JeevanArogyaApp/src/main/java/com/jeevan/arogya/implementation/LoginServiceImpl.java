@@ -29,7 +29,6 @@ public class LoginServiceImpl implements LoginService {
 	public String logIntoAccount(LoginDTO dto) throws LoginException {
 		
 		User existingUser=uRepo.findByMobile(dto.getMobile());
-		System.out.println(existingUser);
 		if(existingUser==null)
 			throw new LoginException("Account Not Found with Mobile No: "+dto.getMobile());
 		

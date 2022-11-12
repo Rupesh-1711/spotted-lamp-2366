@@ -7,30 +7,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class Appointment {
+public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer bookingId;
+	private Integer memberId;
+	private String memberName;
+	
+	@NotNull
+	@Column(length = 12, unique = true)
+	private Integer aadharNo;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	private Date bookingDate;
-	private String bookingStatus;
+	private Date DOB;
 	
-	@Column(unique = true)
-	private String mobile;
-	
+	private boolean dose1=false;
+	private boolean dose2=false;
 	
 }
