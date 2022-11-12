@@ -7,9 +7,9 @@ import com.jeevan.arogya.exception.VaccinationCenterException;
 
 public interface VaccinationCenterService {
 
-	public List<VaccinationCenter> getVaccineCenters();
+	public List<VaccinationCenter> getVaccineCenters()throws VaccinationCenterException;
 	
-	public VaccinationCenter addVaccinationCenter(VaccinationCenter center);
+	public VaccinationCenter addVaccinationCenter(VaccinationCenter center)throws VaccinationCenterException;
 
 	public List<VaccinationCenter> getVaccineCenterByState(String state)throws VaccinationCenterException;
 	
@@ -17,12 +17,12 @@ public interface VaccinationCenterService {
 	
 	public List<VaccinationCenter> getVaccineCenterByPincode(String Pincode)throws VaccinationCenterException;
 	
-	public VaccinationCenter getVaccineCenter(Integer code);
+	public VaccinationCenter getVaccineCenter(Integer code)throws VaccinationCenterException;
 	
 
 	
-	public VaccinationCenter updateVaccineCenter(VaccinationCenter center);
+	public VaccinationCenter updateVaccineCenter(VaccinationCenter center)throws VaccinationCenterException;
 	
-	public VaccinationCenter deleteVaccineCenter(VaccinationCenter center);
+	public VaccinationCenter deleteVaccineCenter(Integer code) throws VaccinationCenterException;
 
 }
