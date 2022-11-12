@@ -58,5 +58,15 @@ public class GlobelException {
 		return new ResponseEntity<MyErrorDetail>(err,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(VaccinationCenterException.class)
+	public ResponseEntity<MyErrorDetail> VaccinationCenterException(VaccinationCenterException vce, WebRequest req){
+		
+		MyErrorDetail err = new MyErrorDetail();
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(vce.getMessage());
+		err.setDescription(req.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetail>(err,HttpStatus.BAD_REQUEST);
+	}
 }
 
