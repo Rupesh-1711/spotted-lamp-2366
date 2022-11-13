@@ -26,6 +26,4 @@ public class VaccinationCenter {
 	@Embedded
 	Address addr;
 	
-	private Integer inventoryId;
-	
 }

@@ -11,4 +11,5 @@ public interface AppointmentService {
 	
 	public Appointment deleteAppointment(Appointment appointment) throws AppointmentException;
 	
+	public String appointmentStatus(Integer appointmentId) throws AppointmentException;
 }

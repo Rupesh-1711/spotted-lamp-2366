@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jeevan.arogya.entity.Appointment;
 import com.jeevan.arogya.entity.LoginDTO;
 import com.jeevan.arogya.entity.VaccinationCenter;
-import com.jeevan.arogya.exception.AppointmentException;
 import com.jeevan.arogya.exception.LoginException;
 import com.jeevan.arogya.exception.UserException;
 import com.jeevan.arogya.exception.VaccinationCenterException;
-import com.jeevan.arogya.service.AppointmentService;
 import com.jeevan.arogya.service.LoginService;
 import com.jeevan.arogya.service.VaccinationCenterService;
 
@@ -34,9 +31,6 @@ public class UserController {
 	
 	@Autowired
 	public VaccinationCenterService vinService;
-	
-	@Autowired
-	public AppointmentService appointmentService;
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> userLogIn(@RequestBody LoginDTO dto) throws LoginException{
@@ -51,6 +45,11 @@ public class UserController {
 		
 		return new ResponseEntity<String>(loginResponse, HttpStatus.OK);
 	}
+	
+	// Vaccin center
+	
+
+
 	
 	@GetMapping("/centerbystate/{state}")
 	public ResponseEntity<List<VaccinationCenter>> getVaccineCenterByState(@PathVariable("state") String state) throws VaccinationCenterException{
@@ -83,14 +82,6 @@ public class UserController {
 	    return new ResponseEntity<VaccinationCenter>(centerbycode,HttpStatus.OK);
 	}
 	
-	@PostMapping("/appointment")
-	public ResponseEntity<Appointment> bookAppointmentHandler(@RequestBody Appointment appointment) throws AppointmentException{
-		
-		Appointment bookedAppointment=appointmentService.bookAppointment(appointment);
-		
-		return new ResponseEntity<Appointment>(bookedAppointment,HttpStatus.ACCEPTED);
-		
-	}
 
 	
 
