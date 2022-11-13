@@ -32,5 +32,10 @@ public class Appointment {
 	@Column(unique = true)
 	private String mobile;
 	
+	@Column(unique = true)
+	private Integer memberId;
+	
+	private Integer centerCode;
+	
 	
 }
