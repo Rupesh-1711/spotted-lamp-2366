@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeevan.arogya.entity.LoginDTO;
+import com.jeevan.arogya.entity.Member;
 import com.jeevan.arogya.entity.VaccinationCenter;
 import com.jeevan.arogya.exception.LoginException;
 import com.jeevan.arogya.exception.UserException;
 import com.jeevan.arogya.exception.VaccinationCenterException;
 import com.jeevan.arogya.service.LoginService;
+import com.jeevan.arogya.service.MemberService;
 import com.jeevan.arogya.service.VaccinationCenterService;
 
 @RestController
@@ -31,6 +33,9 @@ public class UserController {
 	
 	@Autowired
 	public VaccinationCenterService vinService;
+	
+	@Autowired
+	public  MemberService mService;
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> userLogIn(@RequestBody LoginDTO dto) throws LoginException{
@@ -46,7 +51,6 @@ public class UserController {
 		return new ResponseEntity<String>(loginResponse, HttpStatus.OK);
 	}
 	
-	// Vaccin center
 	
 
 
@@ -82,7 +86,15 @@ public class UserController {
 	    return new ResponseEntity<VaccinationCenter>(centerbycode,HttpStatus.OK);
 	}
 	
-
+// Member 
+	
+	@PostMapping("/addmember")
+	public ResponseEntity<Member> createMember(@RequestBody Member member) throws UserException{
+		
+		      Member addedMember = mService.addMember(member);
+		
+		return new ResponseEntity<Member>(addedMember,HttpStatus.OK);
+	}
 	
 
 }

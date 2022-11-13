@@ -21,4 +21,15 @@ public class CurrentUserSession {
 	private Integer userId;
 	private String sessionKey;
 	private LocalDateTime sessionTime;
+	
+	private Integer centerId;
+
+	public CurrentUserSession(Integer userId, String sessionKey, LocalDateTime sessionTime) {
+		super();
+		this.userId = userId;
+		this.sessionKey = sessionKey;
+		this.sessionTime = sessionTime;
+	}
+	
+	
 }
