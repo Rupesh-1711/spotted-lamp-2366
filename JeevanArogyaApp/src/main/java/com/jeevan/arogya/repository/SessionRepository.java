@@ -13,4 +13,8 @@ public interface SessionRepository extends JpaRepository<CurrentUserSession, Int
 	
 	@Query("select c.sessionKey from CurrentUserSession c where c.userId=?1")
 	public String getSessionKeyByUserId(Integer userId);
+	
+	@Query("select u.userId from CurrentUserSession u")
+	public Integer getUserId();
+	
 }
