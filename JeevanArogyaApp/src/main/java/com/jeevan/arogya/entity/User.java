@@ -1,14 +1,22 @@
 package com.jeevan.arogya.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -41,22 +49,26 @@ public class User {
 	@Min(value=16,message = "Minnimum Age should be 16")
 	private Integer age;
 	
-	@Column(unique = true,length = 10)
+	@NotNull @Pattern(regexp = "[0-9]{10}",message = "Mobile number should be of 10 digits")
 	private String mobile;
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date dob;
 	
-	//Minimum eight characters, at least one letter and one number:
-    @Size(min=6,max=20,message="Password length should be in between 6 to 20")
+	@Pattern(regexp = "[A-Za-z0-9@]{6,15}",message = "Password must be 6 to 15 characters and must have at least 1 alphabate and 1 number")
+	@NotNull @NotBlank @NotEmpty
 	private String password;
 	
     @Column(unique = true)
-    @Size(min=12,max=12,message="Please Enter valid Aadhar Number")
+    @NotNull @Pattern(regexp = "[0-9]{12}",message = "Aadhar  number should be of 12 digits")
 	private String aadharNo;
 	
 	@Embedded
-    @NotNull(message = "Address can not be null")
+	 @NotNull(message = "Address can not be null")
 	private Address addr;
+	
+	@OneToMany(cascade = CascadeType.PERSIST)
+	List<Member> members = new ArrayList<>();
+	
 	
 }
