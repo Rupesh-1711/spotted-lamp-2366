@@ -30,16 +30,22 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member addMember(Member member) throws UserException {
 		
-//		User userInfo = uRepo.findByMobile(member.getMobile());
-//		String sessionKey = sRepo.getSessionKeyByUserId(userInfo.getUserId());
 		Integer userid  = sRepo.getUserId();
-
+		System.out.println("====="+userid);
 		 Optional<User> user1 = uRepo.findById(userid);
 		 if(user1.isPresent()) {
-			User user2 =  user1.get();
-			user2.getMembers().add(member);
+			 System.out.println("====="+user1);
+			 User user2 =  user1.get();
+			 System.out.println("====="+user2);
+			 List<Member> list = user2.getListMembers();
+			 System.out.println("====="+list);
+			 list.add(member);
+			 System.out.println("====="+list);
+			 mRpo.save(member);
 			 uRepo.save(user2);
 			 
+		 }else {
+			 return null;
 		 }
 	
 		return null;
