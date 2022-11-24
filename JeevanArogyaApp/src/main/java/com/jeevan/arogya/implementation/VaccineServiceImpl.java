@@ -4,68 +4,55 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import com.jeevan.arogya.entity.Vaccine;
+import com.jeevan.arogya.entity.VaccineInventory;
 import com.jeevan.arogya.exception.VaccineNotFoundException;
-import com.jeevan.arogya.repository.VaccineRepositary;
+import com.jeevan.arogya.repository.VaccineInventoryRepository;
+import com.jeevan.arogya.repository.VaccineRepository;
 import com.jeevan.arogya.service.VaccineService;
 
 @Service
 public class VaccineServiceImpl implements VaccineService {
 
 	@Autowired
-	VaccineRepositary vRepo;
-
+	private VaccineRepository vRepo;
+	
+	@Autowired
+	private VaccineInventoryRepository inventoryRepo;
+	
 	@Override
 	public List<Vaccine> allVaccine() throws VaccineNotFoundException {
-
+		
 		List<Vaccine> list = vRepo.findAll();
-
 		if (list.size() > 0)
 			return list;
 		else
-			throw new VaccineNotFoundException("Vaccine Doesn't Exist....");
-	}
-
-	@Override
-	public Vaccine getVaccineByName(String VaccineName) throws VaccineNotFoundException {
-
-		Optional<Vaccine> vaccine = vRepo.findByVaccineName(VaccineName);
-
-		if (vaccine != null)
-			return vaccine.get();
-		else
-			throw new VaccineNotFoundException("Vaccine with name " + VaccineName + " in not available");
-
+			throw new VaccineNotFoundException("No Vaccine Found....");
 	}
 
 	@Override
 	public Vaccine getVaccineById(Integer vaccineId) throws VaccineNotFoundException {
+		
 		Optional<Vaccine> opt = vRepo.findById(vaccineId);
-
 		if (opt.isPresent())
 			return opt.get();
-
 		else
 			throw new VaccineNotFoundException("Vaccine with Id " + vaccineId + " is not available");
-
 	}
 
 	@Override
-	public Vaccine addVaccine(Vaccine vaccine) throws VaccineNotFoundException {
-		Optional<Vaccine> vacc = vRepo.findByVaccineName(vaccine.getVaccineName());
-
-		if (vacc.isPresent()) {
-
-			
-			throw new RuntimeException("Vaccine already exists!");
-			
-		}else {
-			return vRepo.save(vaccine);
-		}
+	public Vaccine addVaccine(Vaccine vaccine,Integer inventoryId) throws VaccineNotFoundException {
 		
+		Optional<VaccineInventory> inventoryOpt =inventoryRepo.findById(inventoryId);
+		
+		if(inventoryOpt==null)
+			throw new VaccineNotFoundException("Inventory Not found with this id:");
+		
+		vaccine.setVaccineInventory(inventoryOpt.get());
+		
+		return vRepo.save(vaccine);
 	}
 
 	@Override
@@ -80,14 +67,13 @@ public class VaccineServiceImpl implements VaccineService {
 	}
 
 	@Override
-	public boolean deleteVaccine(Vaccine vaccine) throws VaccineNotFoundException {
-		Optional<Vaccine> opt = vRepo.findById(vaccine.getVaccineCode());
+	public Vaccine deleteVaccine(Integer vaccineId) throws VaccineNotFoundException {
+		Optional<Vaccine> opt = vRepo.findById(vaccineId);
 
 		if (opt.isPresent()) {
-			vRepo.delete(vaccine);
-			return true;
+			vRepo.delete(opt.get());
+			return opt.get();
 		} else
 			throw new VaccineNotFoundException("The vaccine you want to delete does not exist!");
 	}
-
 }

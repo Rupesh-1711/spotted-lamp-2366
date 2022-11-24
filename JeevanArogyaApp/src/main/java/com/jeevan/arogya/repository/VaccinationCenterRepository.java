@@ -6,14 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.jeevan.arogya.entity.Address;
 import com.jeevan.arogya.entity.VaccinationCenter;
 
 
 @Repository
 public interface VaccinationCenterRepository extends JpaRepository<VaccinationCenter, Integer>{
 
-	public VaccinationCenter findByCode(Integer code);
+	public VaccinationCenter findByCenterCode(Integer code);
 
 
 	@Query("select v from VaccinationCenter v where v.addr.city=?1")
@@ -22,5 +21,7 @@ public interface VaccinationCenterRepository extends JpaRepository<VaccinationCe
 	public List<VaccinationCenter> getByState(String state);
 	@Query("select v from VaccinationCenter v where v.addr.pincode=?1")
 	public List<VaccinationCenter> getByPincode(String state);
+	
+	
 }
  
