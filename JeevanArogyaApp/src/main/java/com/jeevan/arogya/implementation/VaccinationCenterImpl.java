@@ -1,8 +1,6 @@
 package com.jeevan.arogya.implementation;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,18 +33,18 @@ public class VaccinationCenterImpl implements VaccinationCenterService{
 	@Override
 	public VaccinationCenter addVaccinationCenter(VaccinationCenter center) throws VaccinationCenterException{
 		                   
-		VaccinationCenter newCenter =vinCenter.findByCode(center.getCode());
+		VaccinationCenter newCenter =vinCenter.findByCenterCode(center.getCenterCode());
 		if(newCenter== null) {
 			return vinCenter.save(center);
 		}else {
-			 throw new VaccinationCenterException("Vaccination Center already exist with code : " +center.getCode());
+			 throw new VaccinationCenterException("Vaccination Center already exist with code : " +center.getCenterCode());
 		}
 		
 	}
 	
 	@Override
 	public VaccinationCenter getVaccineCenter(Integer code) throws VaccinationCenterException{
-		VaccinationCenter getCenter =vinCenter.findByCode(code);
+		VaccinationCenter getCenter =vinCenter.findByCenterCode(code);
 		if(getCenter!= null) {
 			return getCenter;
 		}else {
@@ -59,13 +57,13 @@ public class VaccinationCenterImpl implements VaccinationCenterService{
 
 	@Override
 	public VaccinationCenter updateVaccineCenter(VaccinationCenter center) throws VaccinationCenterException{
-		VaccinationCenter getCenter =vinCenter.findByCode(center.getCode());
+		VaccinationCenter getCenter =vinCenter.findByCenterCode(center.getCenterCode());
 		if(getCenter!=null) {
 		        vinCenter.save(center);
 		         
 		         return center;
 		}else {
-			throw new VaccinationCenterException("Vaccination Center Not exist with code : " +center.getCode());
+			throw new VaccinationCenterException("Vaccination Center Not exist with code : " +center.getCenterCode());
 		}
 		 
 	}
@@ -73,7 +71,7 @@ public class VaccinationCenterImpl implements VaccinationCenterService{
 	@Override
 	public VaccinationCenter deleteVaccineCenter(Integer code) throws VaccinationCenterException{
 		
-		VaccinationCenter getCenter =vinCenter.findByCode(code);
+		VaccinationCenter getCenter =vinCenter.findByCenterCode(code);
 		if(getCenter!=null) {
 			     vinCenter.delete(getCenter);
 			     return getCenter;

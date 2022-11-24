@@ -1,8 +1,7 @@
 package com.jeevan.arogya.implementation;
 
-import java.util.List;
+
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import com.jeevan.arogya.service.MemberService;
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
-	private MemberRepository mRpo;
+	private MemberRepository mRepo;
 	
 	@Autowired
 	private UserRepository uRepo;
@@ -28,28 +27,36 @@ public class MemberServiceImpl implements MemberService {
 	private SessionRepository sRepo;
 	
 	@Override
-	public Member addMember(Member member) throws UserException {
-		
-		Integer userid  = sRepo.getUserId();
-		System.out.println("====="+userid);
-		 Optional<User> user1 = uRepo.findById(userid);
-		 if(user1.isPresent()) {
-			 System.out.println("====="+user1);
-			 User user2 =  user1.get();
-			 System.out.println("====="+user2);
-			 List<Member> list = user2.getListMembers();
-			 System.out.println("====="+list);
-			 list.add(member);
-			 System.out.println("====="+list);
-			 mRpo.save(member);
-			 uRepo.save(user2);
-			 
-		 }else {
-			 return null;
-		 }
-	
-		return null;
+	public Member addMember(Member member,Integer userId) throws UserException {
+		 String sessionKey=sRepo.getSessionKeyByUserId(userId);
+		 if(sessionKey==null)
+			 throw new UserException("User with this id is not logged-in:");
 		 
+		 Optional<User>opt=uRepo.findById(userId);
+		 User user=opt.get();
+		 
+		 member.setUser(user);
+		 
+		 return mRepo.save(member);
 	}
-
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

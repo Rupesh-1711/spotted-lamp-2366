@@ -5,6 +5,6 @@ import com.jeevan.arogya.exception.UserException;
 
 public interface MemberService {
 
-	public Member addMember(Member member) throws UserException;
+	public Member addMember(Member member, Integer userId) throws UserException;
 
 }
